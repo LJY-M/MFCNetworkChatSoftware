@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include "CListenSocket.h"
 
 
 // CMFCNetworkChatSoftwareServerDlg 对话框
@@ -31,4 +32,9 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+
+public:
+	CListenSocket * m_ListenSocket;
+	// 该控件为服务器消息显示器（显示服务器状态、客户端连接等）
+	CListBox m_list_message_logging;
 };

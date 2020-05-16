@@ -59,6 +59,7 @@ CMFCNetworkChatSoftwareServerDlg::CMFCNetworkChatSoftwareServerDlg(CWnd* pParent
 void CMFCNetworkChatSoftwareServerDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_LIST_MESSAGE_LOGGING, m_list_message_logging);
 }
 
 BEGIN_MESSAGE_MAP(CMFCNetworkChatSoftwareServerDlg, CDialogEx)
