@@ -9,6 +9,7 @@ class CListenSocket :
 public:
 	CListenSocket();
 	virtual ~CListenSocket();
+	void SetListBoxMsg(CListBox * ListBox) { m_ListBoxMsg = ListBox; }   //这个ListBox是接收客户端消息的
 public:
 	virtual void OnAccept(int nErrorCode);
 	virtual void OnClose(int nErrorCode);
@@ -18,5 +19,6 @@ public:
 	}
 private:
 	CList<CClientSocket * > m_ClientSocketList;  //这里要维护一个已经连接的客户端列表,这样服务器可以指定向哪个客户端发消息
+	CListBox * m_ListBoxMsg;
 };
 

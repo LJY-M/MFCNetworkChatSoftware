@@ -1,15 +1,17 @@
 #pragma once
 #include <afxsock.h>
-
 class CClientSocket :
 	public CAsyncSocket
 {
 public:
-	CClientSocket();
-	virtual ~CClientSocket();
+	CClientSocket(void);
+	virtual ~CClientSocket(void);
+
 	virtual void OnReceive(int nErrorCode);
 	virtual void OnClose(int nErrorCode);
-	VOID SetListBox(CListBox * ListBox) { m_ListBox = ListBox; }
+	virtual void OnConnect(int nErrorCode);
+
+	void SetListBox(CListBox * ListBox) { m_ListBox = ListBox; }
 	CListBox * m_ListBox;
 };
 

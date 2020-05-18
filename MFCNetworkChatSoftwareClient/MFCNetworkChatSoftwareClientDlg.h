@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include "CClientSocket.h"
 
 
 // CMFCNetworkChatSoftwareClientDlg 对话框
@@ -31,4 +32,9 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+
+public:
+	CClientSocket * m_ClientSocket;
+	CListBox m_ListBox;
+	afx_msg void OnClickedButtonLog();
 };

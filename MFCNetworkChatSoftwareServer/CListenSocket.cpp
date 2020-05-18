@@ -24,11 +24,18 @@ void CListenSocket::OnAccept(int nErrorCode)
 		if (bAccept)
 		{
 			m_ClientSocketList.AddTail(pNewClientSocket);
-			//pNewClientSocket->SetListBox(m_ListBoxMsg);
+			pNewClientSocket->SetListBox(m_ListBoxMsg);
 			CString SocketName;
 			UINT len = 100;
 			pNewClientSocket->GetSockName(SocketName, len);
 			TRACE("Client  : %s request connect.\n", (LPCTSTR)SocketName);
+
+			char addString[100] = "Client ";
+			strcat_s(addString, SocketName.GetBuffer(0));
+			strcat_s(addString, " : ");
+			strcat_s(addString, " request connecttion. ");
+
+			m_ListBoxMsg->AddString(addString);
 			//m_ListBox->AddString(SocketName);           //客户端列表里显示这个已经连接的客户端ip
 		}
 		else

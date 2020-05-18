@@ -65,6 +65,7 @@ BEGIN_MESSAGE_MAP(CMFCNetworkChatSoftwareClientDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTTON_LOG, &CMFCNetworkChatSoftwareClientDlg::OnClickedButtonLog)
 END_MESSAGE_MAP()
 
 
@@ -157,3 +158,38 @@ HCURSOR CMFCNetworkChatSoftwareClientDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CMFCNetworkChatSoftwareClientDlg::OnClickedButtonLog()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	BOOL bInit = AfxSocketInit();
+	if (!bInit)
+	{
+		AfxMessageBox(_T("socket 初始化失败 "));
+		return;
+	}
+
+	if (m_ClientSocket == NULL)
+	{
+		m_ClientSocket = new CClientSocket();
+		m_ClientSocket->Create();
+	}
+	else
+	{
+		m_ClientSocket->Close();
+	}
+
+	CString m_IP  = _T("192.168.0.103");
+	m_ClientSocket->Connect(m_IP, 10101);
+
+	//m_ClientSocket->SetListBox(&m_ListBox);
+
+	Sleep(10000);
+
+	char m_sendBuf[1024];   //消息缓冲区 
+	strcpy_s(m_sendBuf, "Client send:");
+	CString editMSG = _T("LoginTest");
+	strcat_s(m_sendBuf, editMSG);
+	m_ClientSocket->Send(m_sendBuf, strlen(m_sendBuf));
+}

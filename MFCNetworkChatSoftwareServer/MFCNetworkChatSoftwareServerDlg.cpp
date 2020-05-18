@@ -66,6 +66,7 @@ BEGIN_MESSAGE_MAP(CMFCNetworkChatSoftwareServerDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTTON_START, &CMFCNetworkChatSoftwareServerDlg::OnClickedButtonStart)
 END_MESSAGE_MAP()
 
 
@@ -158,3 +159,40 @@ HCURSOR CMFCNetworkChatSoftwareServerDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CMFCNetworkChatSoftwareServerDlg::OnClickedButtonStart()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if ( m_ListenSocket != NULL)
+	{
+		return;
+	}
+
+	BOOL bInit = AfxSocketInit();
+	if (!bInit)
+	{
+		AfxMessageBox(_T("socket 初始化失败 "));
+		return;
+	}
+
+	m_ListenSocket = new CListenSocket();
+
+	BOOL bCreate = m_ListenSocket->Create(10101);
+	if (!bCreate)
+	{
+		AfxMessageBox(_T("创建失败"));
+		delete m_ListenSocket;
+		m_ListenSocket = NULL;
+	}
+
+	BOOL bListen = m_ListenSocket->Listen();
+	if (!bListen)
+	{
+		AfxMessageBox(_T("监听失败！"));
+		delete m_ListenSocket;
+		m_ListenSocket = NULL;
+	}
+
+	m_ListenSocket->SetListBoxMsg(&m_list_message_logging);    //服务器消息记录
+}
