@@ -4,7 +4,7 @@
 
 #pragma once
 #include "CListenSocket.h"
-
+#include "MySQLModule.h"
 
 // CMFCNetworkChatSoftwareServerDlg 对话框
 class CMFCNetworkChatSoftwareServerDlg : public CDialogEx
@@ -39,4 +39,6 @@ public:
 	// 该控件为服务器消息显示器（显示服务器状态、客户端连接信息等）
 	CListBox m_list_message_logging;
 	afx_msg void OnClickedButtonStart();
+
+	MySQLModule* mysqlTest;
 };

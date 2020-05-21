@@ -8,6 +8,8 @@
 #include "MFCNetworkChatSoftwareServerDlg.h"
 #include "afxdialogex.h"
 
+//#include "MySQLModule.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -195,4 +197,8 @@ void CMFCNetworkChatSoftwareServerDlg::OnClickedButtonStart()
 	}
 
 	m_ListenSocket->SetListBoxMsg(&m_list_message_logging);    //服务器消息记录
+
+	mysqlTest = new MySQLModule();
+	mysqlTest->connectTest();
+
 }
