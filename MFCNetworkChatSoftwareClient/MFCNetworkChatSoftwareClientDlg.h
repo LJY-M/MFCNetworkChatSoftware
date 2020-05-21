@@ -37,4 +37,8 @@ public:
 	CClientSocket * m_ClientSocket;
 	CListBox m_ListBox;
 	afx_msg void OnClickedButtonLog();
+	// 登录时输入的用户名
+	CString m_edit_user_name;
+	// 登录时输入的密码
+	CString m_edit_password;
 };

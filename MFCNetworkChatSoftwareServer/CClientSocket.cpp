@@ -26,6 +26,14 @@ void CClientSocket::OnReceive(int nErrorCode)
 		m_StringToReceive[length] = '\0';
 		TRACE("Receive from client : %s \n", m_StringToReceive);
 
+		string m_receive_string = m_StringToReceive;
+		vector<string> resultVec = split(m_receive_string,"/");
+
+		for (size_t i = 0; i<resultVec.size(); i++)
+		{
+			TRACE("Receive split : %s \n", resultVec[i].c_str());
+		}
+
 		CString SocketName;
 		UINT len = 100;
 		GetSockName(SocketName, len);
@@ -55,4 +63,23 @@ void CClientSocket::OnClose(int nErrorCode)
 	AfxMessageBox(_T("¶Ï¿ª"));
 
 	CAsyncSocket::OnClose(nErrorCode);
+}
+
+vector<string> CClientSocket::split(const string &str, const string &pattern)
+{
+	//const char* convert to char*
+	char * strc = new char[strlen(str.c_str()) + 1];
+	strcpy_s(strc,strlen(str.c_str())+1 ,str.c_str());
+	vector<string> resultVec;
+	char *buf;
+	char* tmpStr = strtok_s(strc, pattern.c_str(), &buf);
+	while (tmpStr != NULL)
+	{
+		resultVec.push_back(string(tmpStr));
+		tmpStr = strtok_s(NULL, pattern.c_str(), &buf);
+	}
+
+	delete[] strc;
+
+	return resultVec;
 }

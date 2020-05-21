@@ -1,16 +1,16 @@
 ﻿//{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ 生成的包含文件。
-// 供 MFCNetworkChatSoftwareClient.rc 使用
+// 供 MFCNetworkChatSoftwareServer.rc 使用
 //
 #define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
 #define IDS_ABOUTBOX                    101
-#define IDD_MFCNETWORKCHATSOFTWARECLIENT_DIALOG 102
+#define IDD_MFCNETWORKCHATSOFTWARESERVER_DIALOG 102
 #define IDP_SOCKETS_INIT_FAILED         103
 #define IDR_MAINFRAME                   128
-#define IDC_BUTTON_LOG                  1000
-#define IDC_EDIT_USERNAME               1001
-#define IDC_EDIT_PASSWORD               1002
+#define IDC_LIST_MESSAGE_LOGGIN         1000
+#define IDC_LIST_MESSAGE_LOGGING        1000
+#define IDC_BUTTON_START                1001
 
 // Next default values for new objects
 // 

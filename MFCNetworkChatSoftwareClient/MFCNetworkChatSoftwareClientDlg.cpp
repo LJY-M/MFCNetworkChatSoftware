@@ -52,6 +52,8 @@ END_MESSAGE_MAP()
 
 CMFCNetworkChatSoftwareClientDlg::CMFCNetworkChatSoftwareClientDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MFCNETWORKCHATSOFTWARECLIENT_DIALOG, pParent)
+	, m_edit_user_name(_T(""))
+	, m_edit_password(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -59,6 +61,8 @@ CMFCNetworkChatSoftwareClientDlg::CMFCNetworkChatSoftwareClientDlg(CWnd* pParent
 void CMFCNetworkChatSoftwareClientDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_EDIT_USERNAME, m_edit_user_name);
+	DDX_Text(pDX, IDC_EDIT_PASSWORD, m_edit_password);
 }
 
 BEGIN_MESSAGE_MAP(CMFCNetworkChatSoftwareClientDlg, CDialogEx)
@@ -100,7 +104,7 @@ BOOL CMFCNetworkChatSoftwareClientDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
-	ShowWindow(SW_MAXIMIZE);
+	//ShowWindow(SW_MAXIMIZE);
 
 	ShowWindow(SW_MINIMIZE);
 
@@ -185,11 +189,15 @@ void CMFCNetworkChatSoftwareClientDlg::OnClickedButtonLog()
 
 	//m_ClientSocket->SetListBox(&m_ListBox);
 
-	Sleep(10000);
+	Sleep(5000);
+	UpdateData(TRUE);
 
 	char m_sendBuf[1024];   //消息缓冲区 
-	strcpy_s(m_sendBuf, "Client send:");
-	CString editMSG = _T("LoginTest");
+	strcpy_s(m_sendBuf, "Client send/");
+	CString editMSG = _T("LoginTest/");
 	strcat_s(m_sendBuf, editMSG);
+	strcat_s(m_sendBuf, m_edit_user_name);
+	strcat_s(m_sendBuf, "/");
+	strcat_s(m_sendBuf, m_edit_password);
 	m_ClientSocket->Send(m_sendBuf, strlen(m_sendBuf));
 }
