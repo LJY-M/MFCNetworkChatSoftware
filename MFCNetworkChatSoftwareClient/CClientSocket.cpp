@@ -83,6 +83,9 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag)
 	case 1:
 	{
 		AfxMessageBox(_T(resultVector[0].c_str()));
+		ChatConsoleDlg* chatConsole = new ChatConsoleDlg;
+		chatConsole->Create(IDD_CHAT_CONSOLE);
+		chatConsole->ShowWindow(SW_SHOW);
 		break;
 	}
 	case 2:

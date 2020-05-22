@@ -273,6 +273,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CClientSocket.h" />
+    <ClInclude Include="ChatConsoleDlg.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MFCNetworkChatSoftwareClient.h" />
     <ClInclude Include="MFCNetworkChatSoftwareClientDlg.h" />
@@ -283,6 +284,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CClientSocket.cpp" />
+    <ClCompile Include="ChatConsoleDlg.cpp" />
     <ClCompile Include="MFCNetworkChatSoftwareClient.cpp" />
     <ClCompile Include="MFCNetworkChatSoftwareClientDlg.cpp" />
     <ClCompile Include="pch.cpp">

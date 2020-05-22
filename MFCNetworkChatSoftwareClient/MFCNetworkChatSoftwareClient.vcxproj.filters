@@ -39,6 +39,9 @@
     <ClInclude Include="SemanticPrsing.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ChatConsoleDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFCNetworkChatSoftwareClient.cpp">
@@ -54,6 +57,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="SemanticPrsing.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ChatConsoleDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

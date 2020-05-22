@@ -6,6 +6,8 @@
 #include <vector>
 
 #include "SemanticPrsing.h"
+#include "resource.h"
+#include "ChatConsoleDlg.h"
 
 using namespace std;
 
