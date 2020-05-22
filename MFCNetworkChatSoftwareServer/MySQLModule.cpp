@@ -18,7 +18,7 @@ MySQLModule::MySQLModule() {
 	/* 连接 MySQL 数据库 test  */
 	con->setSchema("network_chat_platform");
 
-	AfxMessageBox(_T("连接成功！"));
+	AfxMessageBox(_T("数据库连接成功！"));
 }
 
 MySQLModule::~MySQLModule()
@@ -144,7 +144,7 @@ sql::ResultSet* MySQLModule::MySQLQuery(const sql::SQLString& sqlString)
 	catch (sql::SQLException &e)
 	{
 		TRACE(" (MySQL error code : %s \n", e.getErrorCode());
-		TRACE(" SQLState : %s \n", e.getSQLState());
+		//TRACE(" SQLState : %s \n", e.getSQLState());
 	}
 
 	//res = stmt->executeQuery("SELECT * FROM user_info");

@@ -25,6 +25,7 @@ void CListenSocket::OnAccept(int nErrorCode)
 		{
 			m_ClientSocketList.AddTail(pNewClientSocket);
 			pNewClientSocket->SetListBox(m_ListBoxMsg);
+			pNewClientSocket->m_sql_operator = m_sql_operator;
 			CString SocketName;
 			UINT len = 100;
 			pNewClientSocket->GetSockName(SocketName, len);

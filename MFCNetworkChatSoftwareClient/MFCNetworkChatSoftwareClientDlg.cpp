@@ -182,6 +182,7 @@ void CMFCNetworkChatSoftwareClientDlg::OnClickedButtonLog()
 	else
 	{
 		m_ClientSocket->Close();
+		return;
 	}
 
 	CString m_IP  = _T("192.168.0.103");
@@ -194,7 +195,7 @@ void CMFCNetworkChatSoftwareClientDlg::OnClickedButtonLog()
 
 	char m_sendBuf[1024];   //消息缓冲区 
 	strcpy_s(m_sendBuf, "Client send/");
-	CString editMSG = _T("LoginTest/");
+	CString editMSG = _T("Login/");
 	strcat_s(m_sendBuf, editMSG);
 	strcat_s(m_sendBuf, m_edit_user_name);
 	strcat_s(m_sendBuf, "/");

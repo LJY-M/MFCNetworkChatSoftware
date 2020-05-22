@@ -29,6 +29,9 @@ void CClientSocket::OnReceive(int nErrorCode)
 		string m_receive_string = m_StringToReceive;
 		vector<string> resultVec = split(m_receive_string,"/");
 
+		m_semantic_prising = new SemanticPrsing();
+		int flag = m_semantic_prising->receivingOrder(m_sql_operator, resultVec);
+
 		for (size_t i = 0; i<resultVec.size(); i++)
 		{
 			TRACE("Receive split : %s \n", resultVec[i].c_str());
@@ -44,10 +47,16 @@ void CClientSocket::OnReceive(int nErrorCode)
 
 		m_ListBox->AddString(addString);
 
-		//char szBuf[1024] = { 0 };
-		//INT nReceiveCounts = Receive((VOID*)szBuf, 1024);
-		//if (m_ListBox != NULL)
-		//	m_ListBox->AddString((LPCTSTR)szBuf);
+		resultReduction(resultVec, flag);
+
+		//if (flag == 1)
+		//{
+		//	char addLoginString[1024] = "User ";
+		//	strcat_s(addLoginString, resultVec[2].c_str());
+		//	strcat_s(addLoginString, " Login Successfully ! ");
+
+		//	m_ListBox->AddString(addLoginString);
+		//}
 
 	}
 
@@ -82,4 +91,47 @@ vector<string> CClientSocket::split(const string &str, const string &pattern)
 	delete[] strc;
 
 	return resultVec;
+}
+
+void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag)
+{
+	// TODO: 在此处添加实现代码.
+	switch (resultFlag)
+	{
+	case 1:
+	{
+		char addLogin1String[1024] = "User ";
+		strcat_s(addLogin1String, resultVector[2].c_str());
+		strcat_s(addLogin1String, " Login Successfully !/1");
+
+		m_ListBox->AddString(addLogin1String);
+
+		Send(addLogin1String, strlen(addLogin1String));
+		break;
+	}
+	case 2:
+	{
+		char addLogin2String[1024] = "User ";
+		strcat_s(addLogin2String, resultVector[2].c_str());
+		strcat_s(addLogin2String, " Wrong Password !/2");
+
+		m_ListBox->AddString(addLogin2String);
+
+		Send(addLogin2String, strlen(addLogin2String));
+		break;
+	}
+	case 3: 
+	{
+		char addLogin3String[1024] = "User ";
+		strcat_s(addLogin3String, resultVector[2].c_str());
+		strcat_s(addLogin3String, " Repeat Login !/3");
+
+		m_ListBox->AddString(addLogin3String);
+
+		Send(addLogin3String, strlen(addLogin3String));
+		break;
+	}
+	default:
+		break;
+	}
 }
