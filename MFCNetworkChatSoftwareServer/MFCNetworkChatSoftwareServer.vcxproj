@@ -307,6 +307,7 @@
     <ResourceCompile Include="MFCNetworkChatSoftwareServer.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cpp.hint" />
     <None Include="res\MFCNetworkChatSoftwareServer.rc2" />
   </ItemGroup>
   <ItemGroup>

@@ -199,6 +199,26 @@ void CMFCNetworkChatSoftwareServerDlg::OnClickedButtonStart()
 	m_ListenSocket->SetListBoxMsg(&m_list_message_logging);    //服务器消息记录
 
 	mysqlTest = new MySQLModule();
-	mysqlTest->connectTest();
+
+	//数据库测试
+	//mysqlTest->connectTest();
+
+	//查询实例
+	//const sql::SQLString sqlString ("SELECT * FROM user_info");
+	//sql::ResultSet *res;
+	//res = mysqlTest->MySQLQuery(sqlString);
+	//while (res->next())
+	//{
+	//	TRACE("\n");
+	//	TRACE(" SQLState : %d \n", res->getInt("id"));
+	//	TRACE(" SQLState : %s \n", res->getString("user_name").c_str());
+	//	TRACE(" SQLState : %s \n", res->getString("password").c_str());
+	//	TRACE(" SQLState : %s \n", res->getString("user_state").c_str());
+	//	TRACE("\n");
+	//	//cout << res->getInt("id") << endl;
+	//	//cout << res->getString("phone").c_str() << endl;
+	//	//cout << res->getString("imsi").c_str() << endl;
+	//}
+	//delete res;
 
 }

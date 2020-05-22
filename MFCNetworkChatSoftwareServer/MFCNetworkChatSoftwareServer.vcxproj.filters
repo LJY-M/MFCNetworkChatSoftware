@@ -72,6 +72,7 @@
     <None Include="res\MFCNetworkChatSoftwareServer.rc2">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\MFCNetworkChatSoftwareServer.ico">

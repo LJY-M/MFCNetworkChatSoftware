@@ -20,5 +20,13 @@ public:
 	MySQLModule();
 	virtual ~MySQLModule();
 	void connectTest();
+
+public:
+	sql::mysql::MySQL_Driver *driver = NULL;
+	sql::Connection *con = NULL;
+	sql::ResultSet* MySQLQuery(const sql::SQLString& sql);
+	bool MySQLInsert(const sql::SQLString& sql);
+	bool MySQLUpdate(const sql::SQLString& sqlString);
+	bool MySQLDelete(const sql::SQLString& sqlString);
 };
 
