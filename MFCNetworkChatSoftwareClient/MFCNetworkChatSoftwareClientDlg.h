@@ -41,4 +41,5 @@ public:
 	CString m_edit_user_name;
 	// 登录时输入的密码
 	CString m_edit_password;
+	afx_msg void OnClose();
 };

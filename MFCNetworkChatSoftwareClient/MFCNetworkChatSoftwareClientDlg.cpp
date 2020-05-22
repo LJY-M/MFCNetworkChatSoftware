@@ -70,6 +70,7 @@ BEGIN_MESSAGE_MAP(CMFCNetworkChatSoftwareClientDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON_LOG, &CMFCNetworkChatSoftwareClientDlg::OnClickedButtonLog)
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 
@@ -201,4 +202,25 @@ void CMFCNetworkChatSoftwareClientDlg::OnClickedButtonLog()
 	strcat_s(m_sendBuf, "/");
 	strcat_s(m_sendBuf, m_edit_password);
 	m_ClientSocket->Send(m_sendBuf, strlen(m_sendBuf));
+}
+
+
+void CMFCNetworkChatSoftwareClientDlg::OnClose()
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	if (MessageBox("确定要退出程序吗？", "退出提示", MB_ICONINFORMATION | MB_YESNO) == IDNO)
+		return; //注意无返回值
+	//CDialog::OnClose();
+
+	if (m_ClientSocket != NULL)
+	{
+		char m_sendBuf[1024];   //消息缓冲区 
+		strcpy_s(m_sendBuf, "Client send/");
+		CString editMSG = _T("Logout/");
+		strcat_s(m_sendBuf, editMSG);
+		strcat_s(m_sendBuf, m_edit_user_name);
+		m_ClientSocket->Send(m_sendBuf, strlen(m_sendBuf));
+	}
+
+	CDialogEx::OnClose();
 }

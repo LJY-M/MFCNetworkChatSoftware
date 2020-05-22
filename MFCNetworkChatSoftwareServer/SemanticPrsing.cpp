@@ -6,14 +6,14 @@ int SemanticPrsing::receivingOrder(MySQLModule* m_sql_operator, vector<string> r
 {
 	// TODO: 在此处添加实现代码.
 
-	int flag = 0;//0:失败；1：登陆成功；2:密码错误；3：多地登录
+	int flag = 0;//0:失败；1：登录成功；2:密码错误；3：多地登录；4：退出成功
 
 	for (size_t i = 0; i < receivingOrderVector.size(); i++)
 	{
 		TRACE("Receive split : %s \n", receivingOrderVector[i].c_str());
 	}
 
-	string orderString[] = {"Client send","Login"};
+	string orderString[] = {"Client send","Login","Logout"};
 
 	if (receivingOrderVector[1].compare(orderString[1]) == 0)
 	{
@@ -28,7 +28,7 @@ int SemanticPrsing::receivingOrder(MySQLModule* m_sql_operator, vector<string> r
 		string sqlUpdateTitle = "UPDATE user_info ";
 		string sqlUpdateState = "SET user_state = '";
 
-		"UPDATE user_info SET user_state='0' WHERE user_name='LJY_Mie' ";
+		//"UPDATE user_info SET user_state='0' WHERE user_name='LJY_Mie' ";
 		
 		string sqlExecute = sqlSelectTitle + sqlWhereUserName + userName + sqlEnd;
 
@@ -67,6 +67,22 @@ int SemanticPrsing::receivingOrder(MySQLModule* m_sql_operator, vector<string> r
 		}
 		delete res;
 	}
+	else if (receivingOrderVector[1].compare(orderString[2]) == 0)
+	{
+		string userName = receivingOrderVector[2];
 
+		string sqlUpdateTitle = "UPDATE user_info ";
+		string sqlWhereUserName = " WHERE user_name = '";
+		string sqlUpdateState = "SET user_state = '";
+		string sqlEnd = "'";
+
+		//"UPDATE user_info SET user_state='0' WHERE user_name='LJY_Mie' ";
+
+		string sqlUpdateExecute = sqlUpdateTitle + sqlUpdateState + "0' " + sqlWhereUserName + userName + sqlEnd;
+
+		const sql::SQLString sqlUpdateString(sqlUpdateExecute.c_str());
+		m_sql_operator->MySQLUpdate(sqlUpdateString);
+		flag = 4;
+	}
 	return flag;
 }

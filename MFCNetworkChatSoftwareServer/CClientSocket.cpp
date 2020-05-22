@@ -131,6 +131,15 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag)
 		Send(addLogin3String, strlen(addLogin3String));
 		break;
 	}
+	case 4:
+	{
+		char addLogin4String[1024] = "User ";
+		strcat_s(addLogin4String, resultVector[2].c_str());
+		strcat_s(addLogin4String, " Logout Successfully !/4");
+
+		m_ListBox->AddString(addLogin4String);
+		break;
+	}
 	default:
 		break;
 	}
