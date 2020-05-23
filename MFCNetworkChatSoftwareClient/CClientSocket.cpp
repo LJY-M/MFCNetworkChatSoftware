@@ -92,6 +92,9 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag)
 		m_list_new_friend = &(chatConsole->m_list_new_friend);
 		m_combobox_query_friend = &(chatConsole->m_combobox_query_friend);
 
+		chatConsole->clientName = *clientName;
+		chatConsole->clientSocket = this;
+
 		char m_sendBuf[1024];   //初始化新对话框列表
 		strcpy_s(m_sendBuf, "Client send/");
 		CString editMSG = _T("ListInit/");

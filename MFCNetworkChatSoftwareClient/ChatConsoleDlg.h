@@ -1,5 +1,12 @@
 ﻿#pragma once
+//#include <iostream>
+#include <string>
 
+//#include "CClientSocket.h"
+
+class CClientSocket;
+
+using namespace std;
 
 // ChatConsoleDlg 对话框
 
@@ -30,4 +37,13 @@ public:
 	CListBox m_list_new_friend;
 	// 查询用户下拉框
 	CComboBox m_combobox_query_friend;
+
+	string clientName;
+
+	CClientSocket * clientSocket;
+
+
+	afx_msg void OnClickedButtonSendMsg();
+	// 信息发送栏
+	CString m_edit_send_msg;
 };

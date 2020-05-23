@@ -98,10 +98,11 @@ int SemanticPrsing::receivingOrder(MySQLModule* m_sql_operator, vector<string> r
 		string sqlSelectFriendListTitle = "SELECT * FROM friend_list ";
 		string sqlWhereFriendA = " WHERE friend_a = '";
 		string sqlWhereFriendB = " WHERE friend_b = '";
+		string sqlWhereFriendRelationship = " AND friend_relationship = 'ab' ";
 		string sqlEnd = "'";
 
-		string sqlQueryAExecute = sqlSelectFriendListTitle + sqlWhereFriendA + userName + sqlEnd;
-		string sqlQueryBExecute = sqlSelectFriendListTitle + sqlWhereFriendB + userName + sqlEnd;
+		string sqlQueryAExecute = sqlSelectFriendListTitle + sqlWhereFriendA + userName + sqlEnd + sqlWhereFriendRelationship;
+		string sqlQueryBExecute = sqlSelectFriendListTitle + sqlWhereFriendB + userName + sqlEnd + sqlWhereFriendRelationship;
 
 		CList<string> frinedNameList;
 

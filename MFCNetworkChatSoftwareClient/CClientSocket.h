@@ -9,6 +9,8 @@
 #include "resource.h"
 #include "ChatConsoleDlg.h"
 
+//class ChatConsoleDlg;
+
 using namespace std;
 
 class CClientSocket :
