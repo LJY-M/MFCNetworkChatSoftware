@@ -6,6 +6,8 @@
 #include "ChatConsoleDlg.h"
 #include "afxdialogex.h"
 
+#include "CClientSocket.h"
+
 
 // ChatConsoleDlg 对话框
 
@@ -47,11 +49,18 @@ void ChatConsoleDlg::OnClickedButtonSendMsg()
 
 	UpdateData(true);
 
+	char systemTime[512];
+
+	SYSTEMTIME sys;
+	GetLocalTime(&sys);
+
+	sprintf_s(systemTime, sizeof(systemTime), "%4d-%02d-%02d-%02d-%02d-%02d", sys.wYear, sys.wMonth, sys.wDay, sys.wHour, sys.wMinute, sys.wSecond);
+
 	CString targetUser;
 	int nCurInedx = m_list_friends.GetCurSel();
 	m_list_friends.GetText(nCurInedx, targetUser);
 
-	char m_sendBuf[1024];   //初始化新对话框列表
+	char m_sendBuf[2048];   //初始化新对话框列表
 	strcpy_s(m_sendBuf, "Client send/");
 	CString editMSG = _T("SendMSG/");
 	strcat_s(m_sendBuf, editMSG);
@@ -60,5 +69,13 @@ void ChatConsoleDlg::OnClickedButtonSendMsg()
 	strcat_s(m_sendBuf, targetUser);
 	strcat_s(m_sendBuf, "/");
 	strcat_s(m_sendBuf, m_edit_send_msg);
-	//clientSocket->Send(m_sendBuf, strlen(m_sendBuf));
+	strcat_s(m_sendBuf, "/");
+	strcat_s(m_sendBuf, systemTime);
+	clientSocket->Send(m_sendBuf, strlen(m_sendBuf));
+
+	m_list_dialog.AddString("\n");
+	m_list_dialog.AddString(clientName.c_str());
+	m_list_dialog.AddString(m_edit_send_msg);
+	m_list_dialog.AddString(systemTime);
+	m_list_dialog.AddString("\n");
 }

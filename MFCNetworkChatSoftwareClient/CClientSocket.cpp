@@ -125,6 +125,29 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag)
 		}
 		break;
 	}
+	case 6:
+	{
+		string returnMSG = resultVector[2];
+		if (returnMSG.compare("Failed") == 0)
+		{
+			AfxMessageBox(_T("您的好友已下线！"));
+		}
+		TRACE("MSG Return : %s \n", returnMSG.c_str());
+		break;
+	}
+	case 7:
+	{
+		string fromName = resultVector[2];
+		string MSG = resultVector[4];
+		string sysTime = resultVector[5];
+
+		m_list_dialog->AddString("");
+		m_list_dialog->AddString(fromName.c_str());
+		m_list_dialog->AddString(MSG.c_str());
+		m_list_dialog->AddString(sysTime.c_str());
+		m_list_dialog->AddString("");
+		break;
+	}
 	default:
 		break;
 	}

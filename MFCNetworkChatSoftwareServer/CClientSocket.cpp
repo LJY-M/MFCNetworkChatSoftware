@@ -177,14 +177,60 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag,
 	}
 	case 5:
 	{
-		char addLogin3String[1024] = "User ";
-		strcat_s(addLogin3String, resultVector[2].c_str());
-		strcat_s(addLogin3String, " Get Friend List !/5/");
-		strcat_s(addLogin3String, m_semantic_prising->FNameList);
+		char addLogin5String[1024] = "User ";
+		strcat_s(addLogin5String, resultVector[2].c_str());
+		strcat_s(addLogin5String, " Get Friend List !/5/");
+		strcat_s(addLogin5String, m_semantic_prising->FNameList);
 
-		m_ListBox->AddString(addLogin3String);
+		m_ListBox->AddString(addLogin5String);
 
-		Send(addLogin3String, strlen(addLogin3String));
+		Send(addLogin5String, strlen(addLogin5String));
+		break;
+	}
+	case 6:
+	{
+		string sengFlag = "Failed";
+
+		string formName = resultVector[2];
+		string toUser = resultVector[3];
+		string MSG = resultVector[4];
+		string sysTime = resultVector[5];
+
+		char sendMSG[1024] = "Send/7/";
+		strcat_s(sendMSG, formName.c_str());
+		strcat_s(sendMSG, "/");
+		strcat_s(sendMSG, toUser.c_str());
+		strcat_s(sendMSG, "/");
+		strcat_s(sendMSG, MSG.c_str());
+		strcat_s(sendMSG, "/");
+		strcat_s(sendMSG, sysTime.c_str());
+
+		vector<CClientSocket *>::iterator iter = m_ClientSocketList->begin();
+		while (iter != m_ClientSocketList->end())
+		{
+			string name = (*iter)->clientName;
+			if (toUser.compare(name) == 0)
+			{
+				(*iter)->Send(sendMSG, strlen(sendMSG));
+				sengFlag = "Succeed";
+			}
+			iter++;
+		}
+
+		char addLogin6String[1024] = "User ";
+		strcat_s(addLogin6String, resultVector[2].c_str());
+		strcat_s(addLogin6String, " Send To ");
+		strcat_s(addLogin6String, resultVector[3].c_str());
+		strcat_s(addLogin6String, " : ");
+		strcat_s(addLogin6String, resultVector[4].c_str());
+		strcat_s(addLogin6String, "  ");
+		strcat_s(addLogin6String, resultVector[5].c_str());
+		strcat_s(addLogin6String, " /6/");
+		strcat_s(addLogin6String, sengFlag.c_str());
+
+		m_ListBox->AddString(addLogin6String);
+
+		Send(addLogin6String, strlen(addLogin6String));
 		break;
 	}
 	default:
