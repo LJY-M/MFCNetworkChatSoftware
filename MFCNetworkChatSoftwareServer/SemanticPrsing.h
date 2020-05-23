@@ -15,5 +15,12 @@ public:
 	SemanticPrsing() {};
 	~SemanticPrsing() {};
 	int receivingOrder(MySQLModule* m_sql_operator, vector<string> receivingOrderVector);
+
+	void setClientName(string* Name) { clientName = Name; }
+
+	string* clientName;
+	int* clientId;
+
+	char FNameList[1024];
 };
 

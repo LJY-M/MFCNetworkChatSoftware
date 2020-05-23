@@ -20,4 +20,14 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
+
+public:
+	// 当前好友列表
+	CListBox m_list_friends;
+	// 对话框窗口，显示信息用
+	CListBox m_list_dialog;
+	// 好友申请列表
+	CListBox m_list_new_friend;
+	// 查询用户下拉框
+	CComboBox m_combobox_query_friend;
 };

@@ -24,6 +24,10 @@ ChatConsoleDlg::~ChatConsoleDlg()
 void ChatConsoleDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_LIST_FRIENDS, m_list_friends);
+	DDX_Control(pDX, IDC_LIST_DIALOG, m_list_dialog);
+	DDX_Control(pDX, IDC_LIST_NEW_FRIEND, m_list_new_friend);
+	DDX_Control(pDX, IDC_ADD_FRIEND, m_combobox_query_friend);
 }
 
 

@@ -23,9 +23,12 @@ void CListenSocket::OnAccept(int nErrorCode)
 		BOOL bAccept = Accept(*pNewClientSocket);
 		if (bAccept)
 		{
-			m_ClientSocketList.AddTail(pNewClientSocket);
+			m_ClientSocketList.push_back(pNewClientSocket);
 			pNewClientSocket->SetListBox(m_ListBoxMsg);
 			pNewClientSocket->m_sql_operator = m_sql_operator;
+			pNewClientSocket->m_ClientSocketList = &m_ClientSocketList;
+			//pNewClientSocket->m_ClientSocketList.assign(m_ClientSocketList.begin(), m_ClientSocketList.end());
+
 			CString SocketName;
 			UINT len = 100;
 			pNewClientSocket->GetSockName(SocketName, len);

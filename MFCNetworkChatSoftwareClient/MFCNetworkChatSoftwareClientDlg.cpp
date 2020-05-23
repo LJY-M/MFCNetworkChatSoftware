@@ -191,8 +191,14 @@ void CMFCNetworkChatSoftwareClientDlg::OnClickedButtonLog()
 
 	//m_ClientSocket->SetListBox(&m_ListBox);
 
-	Sleep(5000);
+	Sleep(3000);
 	UpdateData(TRUE);
+
+	//m_ClientSocket->clientName = m_edit_user_name;
+	char m_name[32];
+	strcpy_s(m_name, "");
+	strcat_s(m_name, m_edit_user_name);
+	m_ClientSocket->clientName = new string(m_name);
 
 	char m_sendBuf[1024];   //消息缓冲区 
 	strcpy_s(m_sendBuf, "Client send/");
@@ -202,6 +208,8 @@ void CMFCNetworkChatSoftwareClientDlg::OnClickedButtonLog()
 	strcat_s(m_sendBuf, "/");
 	strcat_s(m_sendBuf, m_edit_password);
 	m_ClientSocket->Send(m_sendBuf, strlen(m_sendBuf));
+
+
 }
 
 

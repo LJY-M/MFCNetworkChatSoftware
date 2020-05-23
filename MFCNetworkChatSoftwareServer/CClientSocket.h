@@ -25,6 +25,12 @@ public:
 
 	SemanticPrsing* m_semantic_prising;
 	MySQLModule* m_sql_operator;
-	void resultReduction(vector<string> resultVector, int resultFlag);
+	void resultReduction(vector<string> resultVector, int resultFlag, SemanticPrsing* m_semantic_prising);
+
+	vector<CClientSocket * >* m_ClientSocketList;
+
+	string clientName  = "";
+	int* clientId;
+	int* state;
 };
 

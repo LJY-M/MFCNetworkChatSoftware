@@ -86,6 +86,19 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag)
 		ChatConsoleDlg* chatConsole = new ChatConsoleDlg;
 		chatConsole->Create(IDD_CHAT_CONSOLE);
 		chatConsole->ShowWindow(SW_SHOW);
+
+		m_list_friends = &(chatConsole->m_list_friends);
+		m_list_dialog = &(chatConsole->m_list_dialog);
+		m_list_new_friend = &(chatConsole->m_list_new_friend);
+		m_combobox_query_friend = &(chatConsole->m_combobox_query_friend);
+
+		char m_sendBuf[1024];   //初始化新对话框列表
+		strcpy_s(m_sendBuf, "Client send/");
+		CString editMSG = _T("ListInit/");
+		strcat_s(m_sendBuf, editMSG);
+		strcat_s(m_sendBuf, (*clientName).c_str());
+		Send(m_sendBuf, strlen(m_sendBuf));
+
 		break;
 	}
 	case 2:
@@ -96,6 +109,17 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag)
 	case 3:
 	{
 		AfxMessageBox(_T(resultVector[0].c_str()));
+		break;
+	}
+	case 5:
+	{
+		string friendListString = resultVector[2];
+		vector<string> friendVec = split(friendListString, "-");
+		for (size_t i = 0; i < friendVec.size(); i++)
+		{
+			TRACE("friend split : %s \n", friendVec[i].c_str());
+			m_list_friends->AddString(friendVec[i].c_str());
+		}
 		break;
 	}
 	default:
