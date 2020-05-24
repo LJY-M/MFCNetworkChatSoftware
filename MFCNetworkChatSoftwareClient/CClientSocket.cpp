@@ -22,7 +22,7 @@ void CClientSocket::OnReceive(int nErrorCode)
 		char m_StringToReceive[1024];
 		int length = Receive(m_StringToReceive, sizeof(m_StringToReceive), 0);
 		m_StringToReceive[length] = '\0';
-		TRACE("Receive from client : %s \n", m_StringToReceive);
+		TRACE("Receive from server : %s \n", m_StringToReceive);
 
 		string m_receive_string = m_StringToReceive;
 		vector<string> resultVec = split(m_receive_string, "/");
@@ -95,7 +95,7 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag)
 		chatConsole->clientName = *clientName;
 		chatConsole->clientSocket = this;
 
-		char m_sendBuf[1024];   //初始化新对话框列表
+		char m_sendBuf[1024];   //初始化缓冲区
 		strcpy_s(m_sendBuf, "Client send/");
 		CString editMSG = _T("ListInit/");
 		strcat_s(m_sendBuf, editMSG);
@@ -116,6 +116,10 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag)
 	}
 	case 5:
 	{
+		if (resultVector.size() < 3)
+		{
+			break;
+		}
 		string friendListString = resultVector[2];
 		vector<string> friendVec = split(friendListString, "-");
 		for (size_t i = 0; i < friendVec.size(); i++)
@@ -150,6 +154,10 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag)
 	}
 	case 8:
 	{
+		if (resultVector.size() < 3)
+		{
+			break;
+		}
 		string friendRequestListString = resultVector[2];
 		vector<string> friendRequestVec = split(friendRequestListString, "-");
 		for (size_t i = 0; i < friendRequestVec.size(); i++)
@@ -157,6 +165,25 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag)
 			TRACE("friend split : %s \n", friendRequestVec[i].c_str());
 			m_list_new_friend->AddString(friendRequestVec[i].c_str());
 		}
+		break;
+	}
+
+	case 9:
+	{
+
+		TRACE("Client Refetch List ！\n");
+
+		m_list_friends->ResetContent();
+		m_list_new_friend->ResetContent();
+
+		char m_sendBuf[1024];   //初始化缓冲区
+		strcpy_s(m_sendBuf, "Client send/");
+		CString editMSG = _T("ListInit/");
+		strcat_s(m_sendBuf, editMSG);
+		strcat_s(m_sendBuf, (*clientName).c_str());
+
+		Send(m_sendBuf, strlen(m_sendBuf));
+
 		break;
 	}
 	default:

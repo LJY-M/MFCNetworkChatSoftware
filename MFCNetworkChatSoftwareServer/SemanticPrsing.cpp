@@ -7,14 +7,15 @@ int SemanticPrsing::receivingOrder(MySQLModule* m_sql_operator, vector<string> r
 	// TODO: 在此处添加实现代码.
 
 	int flag = 0;//0:失败；1：登录成功；2:密码错误；3：多地登录；
-	//4：退出成功；5：发送好友列表；6：发送信息返回；7：发送信息；8：发送好友申请列表
+	//4：退出成功；5：发送好友列表；6：发送信息返回；7：发送信息；
+	//8：发送好友申请列表；9：更新好友数据库：提醒客户端更新列表
 
 	for (size_t i = 0; i < receivingOrderVector.size(); i++)
 	{
 		TRACE("Receive split : %s \n", receivingOrderVector[i].c_str());
 	}
 
-	string orderString[] = {"Client send","Login","Logout","ListInit","SendMSG"};
+	string orderString[] = {"Client send","Login","Logout","ListInit","SendMSG","AddNewFriendReceive"};
 
 	if (receivingOrderVector[1].compare(orderString[1]) == 0)
 	{
@@ -195,6 +196,39 @@ int SemanticPrsing::receivingOrder(MySQLModule* m_sql_operator, vector<string> r
 
 		flag = 6;
 	}
+	else if (receivingOrderVector[1].compare(orderString[5]) == 0)
+	{
+		string FNameA = receivingOrderVector[2];
+		string FNameB = receivingOrderVector[3];
+
+		string friend_a = FNameA;
+		string friend_b = FNameB;
+
+		if (FNameA >= FNameB)
+		{
+			friend_a = FNameB;
+			friend_b = FNameA;
+		}
+
+		string sqlUpdateFriendListTitle = "UPDATE friend_list ";
+		string sqlUpdateFriendship = "SET friend_relationship = 'ab'";
+
+		string sqlWhereFriendA = " WHERE friend_a = '";
+		string sqlWhereFriendB = " AND friend_b = '";
+
+		string sqlEnd = "'";
+
+		//"UPDATE user_info SET user_state='0' WHERE user_name='LJY_Mie' ";
+
+		string sqlUpdateExecute = sqlUpdateFriendListTitle + sqlUpdateFriendship 
+			+ sqlWhereFriendA + friend_a + sqlEnd 
+			+ sqlWhereFriendB + friend_b + sqlEnd;
+
+		const sql::SQLString sqlUpdateString(sqlUpdateExecute.c_str());
+		m_sql_operator->MySQLUpdate(sqlUpdateString);
+		flag = 9;
+	}
+
 	return flag;
 }
 

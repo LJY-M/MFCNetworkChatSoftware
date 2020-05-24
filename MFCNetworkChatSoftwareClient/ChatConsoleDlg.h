@@ -49,4 +49,5 @@ public:
 	// 添加好友姓名编辑框
 	CString m_edit_friend_name;
 	afx_msg void OnClickedButtonSendApp();
+	afx_msg void OnClickedButtonAcceptApp();
 };

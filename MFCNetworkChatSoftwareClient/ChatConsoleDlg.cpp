@@ -39,6 +39,7 @@ void ChatConsoleDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(ChatConsoleDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_SEND_MSG, &ChatConsoleDlg::OnClickedButtonSendMsg)
 	ON_BN_CLICKED(IDC_BUTTON_SEND_APP, &ChatConsoleDlg::OnClickedButtonSendApp)
+	ON_BN_CLICKED(IDC_BUTTON_ACCEPT_APP, &ChatConsoleDlg::OnClickedButtonAcceptApp)
 END_MESSAGE_MAP()
 
 
@@ -62,7 +63,7 @@ void ChatConsoleDlg::OnClickedButtonSendMsg()
 	int nCurInedx = m_list_friends.GetCurSel();
 	m_list_friends.GetText(nCurInedx, targetUser);
 
-	char m_sendBuf[2048];   //初始化新对话框列表
+	char m_sendBuf[2048];   //初始化缓冲区
 	strcpy_s(m_sendBuf, "Client send/");
 	CString editMSG = _T("SendMSG/");
 	strcat_s(m_sendBuf, editMSG);
@@ -97,7 +98,7 @@ void ChatConsoleDlg::OnClickedButtonSendApp()
 	strcpy_s(m_name, "");
 	strcat_s(m_name, m_edit_friend_name);
 
-	char m_sendBuf[2048];   //初始化新对话框列表
+	char m_sendBuf[2048];   //初始化缓冲区
 	strcpy_s(m_sendBuf, "Client send/");
 	CString editMSG = _T("AddNewFriendSend/");
 	strcat_s(m_sendBuf, editMSG);
@@ -106,4 +107,26 @@ void ChatConsoleDlg::OnClickedButtonSendApp()
 	strcat_s(m_sendBuf, m_name);
 
 	//clientSocket->Send(m_sendBuf, strlen(m_sendBuf));
+}
+
+
+void ChatConsoleDlg::OnClickedButtonAcceptApp()
+{
+	// TODO: 在此添加控件通知处理程序代码
+
+	UpdateData(true);
+
+	CString targetUser;
+	int nCurInedx = m_list_new_friend.GetCurSel();
+	m_list_new_friend.GetText(nCurInedx, targetUser);
+
+	char m_sendBuf[2048];   //初始化缓冲区
+	strcpy_s(m_sendBuf, "Client send/");
+	CString editMSG = _T("AddNewFriendReceive/");
+	strcat_s(m_sendBuf, editMSG);
+	strcat_s(m_sendBuf, clientName.c_str());
+	strcat_s(m_sendBuf, "/");
+	strcat_s(m_sendBuf, targetUser);
+
+	clientSocket->Send(m_sendBuf, strlen(m_sendBuf));
 }

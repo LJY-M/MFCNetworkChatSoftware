@@ -186,7 +186,7 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag,
 
 		Send(addLogin5String, strlen(addLogin5String));
 
-		Sleep(1000);
+		Sleep(3000);
 
 		char addLogin8String[1024] = "User ";
 		strcat_s(addLogin8String, resultVector[2].c_str());
@@ -242,6 +242,35 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag,
 		m_ListBox->AddString(addLogin6String);
 
 		Send(addLogin6String, strlen(addLogin6String));
+		break;
+	}
+	case 9:
+	{
+		string FromFriend = resultVector[2];
+		string ToFriend = resultVector[3];
+
+		char addLogin9String[1024] = "User ";
+		strcat_s(addLogin9String, FromFriend.c_str());
+		strcat_s(addLogin9String, " Add New Friend :");
+		strcat_s(addLogin9String, ToFriend.c_str());
+		strcat_s(addLogin9String, " /9");
+
+		m_ListBox->AddString(addLogin9String);
+
+		Send(addLogin9String, strlen(addLogin9String));
+
+
+		vector<CClientSocket *>::iterator iter = m_ClientSocketList->begin();
+		while (iter != m_ClientSocketList->end())
+		{
+			string name = (*iter)->clientName;
+			if (ToFriend.compare(name) == 0)
+			{
+				(*iter)->Send(addLogin9String, strlen(addLogin9String));
+			}
+			iter++;
+		}
+
 		break;
 	}
 	default:

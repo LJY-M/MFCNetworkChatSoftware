@@ -201,7 +201,7 @@ void CMFCNetworkChatSoftwareServerDlg::OnClickedButtonStart()
 	mysqlTest = new MySQLModule();
 	m_ListenSocket->m_sql_operator = mysqlTest;
 
-	this->EnableWindow(FALSE);
+	//this->EnableWindow(FALSE);
 
 	//数据库测试
 	//mysqlTest->connectTest();
