@@ -106,7 +106,7 @@ void ChatConsoleDlg::OnClickedButtonSendApp()
 	strcat_s(m_sendBuf, "/");
 	strcat_s(m_sendBuf, m_name);
 
-	//clientSocket->Send(m_sendBuf, strlen(m_sendBuf));
+	clientSocket->Send(m_sendBuf, strlen(m_sendBuf));
 }
 
 

@@ -273,6 +273,68 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag,
 
 		break;
 	}
+	case 10:
+	{
+		string FromFriend = resultVector[2];
+		string ToFriend = resultVector[3];
+
+		char addLogin10String[1024] = "User ";
+		strcat_s(addLogin10String, FromFriend.c_str());
+		strcat_s(addLogin10String, " Add New Friend :");
+		strcat_s(addLogin10String, ToFriend.c_str());
+		strcat_s(addLogin10String, "Failed---No User/10");
+
+		m_ListBox->AddString(addLogin10String);
+
+		Send(addLogin10String, strlen(addLogin10String));
+
+		break;
+	}
+	case 11:
+	{
+		string FromFriend = resultVector[2];
+		string ToFriend = resultVector[3];
+
+		char addLogin11String[1024] = "User ";
+		strcat_s(addLogin11String, FromFriend.c_str());
+		strcat_s(addLogin11String, " Add New Friend :");
+		strcat_s(addLogin11String, ToFriend.c_str());
+		strcat_s(addLogin11String, "Failed---Existing Relationship/11");
+
+		m_ListBox->AddString(addLogin11String);
+
+		Send(addLogin11String, strlen(addLogin11String));
+
+		break;
+	}
+	case 12:
+	{
+		string FromFriend = resultVector[2];
+		string ToFriend = resultVector[3];
+
+		char addLogin12String[1024] = "User ";
+		strcat_s(addLogin12String, FromFriend.c_str());
+		strcat_s(addLogin12String, " Add New Friend :");
+		strcat_s(addLogin12String, ToFriend.c_str());
+		strcat_s(addLogin12String, "Succeed/9");
+
+		m_ListBox->AddString(addLogin12String);
+
+		Send(addLogin12String, strlen(addLogin12String));
+
+		vector<CClientSocket *>::iterator iter = m_ClientSocketList->begin();
+		while (iter != m_ClientSocketList->end())
+		{
+			string name = (*iter)->clientName;
+			if (ToFriend.compare(name) == 0)
+			{
+				(*iter)->Send(addLogin12String, strlen(addLogin12String));
+			}
+			iter++;
+		}
+
+		break;
+	}
 	default:
 		break;
 	}

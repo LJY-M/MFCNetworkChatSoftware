@@ -9,13 +9,14 @@ int SemanticPrsing::receivingOrder(MySQLModule* m_sql_operator, vector<string> r
 	int flag = 0;//0:失败；1：登录成功；2:密码错误；3：多地登录；
 	//4：退出成功；5：发送好友列表；6：发送信息返回；7：发送信息；
 	//8：发送好友申请列表；9：更新好友数据库：提醒客户端更新列表
+	//10：用户不存在；11：已存在关系；12：请求插入成功
 
 	for (size_t i = 0; i < receivingOrderVector.size(); i++)
 	{
 		TRACE("Receive split : %s \n", receivingOrderVector[i].c_str());
 	}
 
-	string orderString[] = {"Client send","Login","Logout","ListInit","SendMSG","AddNewFriendReceive"};
+	string orderString[] = {"Client send","Login","Logout","ListInit","SendMSG","AddNewFriendReceive","AddNewFriendSend"};
 
 	if (receivingOrderVector[1].compare(orderString[1]) == 0)
 	{
@@ -227,6 +228,66 @@ int SemanticPrsing::receivingOrder(MySQLModule* m_sql_operator, vector<string> r
 		const sql::SQLString sqlUpdateString(sqlUpdateExecute.c_str());
 		m_sql_operator->MySQLUpdate(sqlUpdateString);
 		flag = 9;
+	}
+	else if (receivingOrderVector[1].compare(orderString[6]) == 0)
+	{
+		string FNameA = receivingOrderVector[2];
+		string FNameB = receivingOrderVector[3];
+
+		string friend_a = FNameA;
+		string friend_b = FNameB;
+		string relationship = "a";
+		string InFriendShip = "b";
+
+		if (FNameA >= FNameB)
+		{
+			friend_a = FNameB;
+			friend_b = FNameA;
+			relationship = "b";
+			InFriendShip = "a";
+		}
+
+		string sqlSelectTitle = "SELECT * FROM user_info ";
+		string sqlWhereUserName = " WHERE user_name = '";
+		string sqlWherePassword = "' AND password = '";
+		string sqlEnd = "'";
+
+		string sqlExecute = sqlSelectTitle + sqlWhereUserName + FNameB + sqlEnd;
+
+		const sql::SQLString sqlString(sqlExecute.c_str());
+		sql::ResultSet *res;
+		res = m_sql_operator->MySQLQuery(sqlString);
+		flag = 10;
+		if (res->next())
+		{
+			TRACE("\n");
+			TRACE(" SQLLoginState : %d \n", res->getInt("id"));
+			TRACE(" SQLLoginState : %s \n", res->getString("user_name").c_str());
+			TRACE(" SQLLoginState : %s \n", res->getString("password").c_str());
+			TRACE(" SQLLoginState : %s \n", res->getString("user_state").c_str());
+			TRACE("\n");
+			flag = 12;
+		}
+
+		string sqlFriendTestExecute = "SELECT * FROM friend_list WHERE friend_a='"
+			+ friend_a + "' AND friend_b = '" + friend_b + "'";
+		const sql::SQLString sqlFriendTestString(sqlFriendTestExecute.c_str());
+		sql::ResultSet *res2;
+		res2 = m_sql_operator->MySQLQuery(sqlFriendTestString);
+		if (res2->next())
+		{
+			flag = 11;
+		}
+
+		if (flag == 12)
+		{
+			//"INSERT INTO user_info (user_name, password, user_state) VALUES ('LJY_Mie', '333333', 1)";
+			string sqlFriendTestInsert = "INSERT INTO friend_list (friend_a, friend_b, friend_relationship) VALUES ('"
+				+ friend_a + "', '" + friend_b + "', '" + relationship + "')";
+			const sql::SQLString sqlFriendInsertString(sqlFriendTestInsert.c_str());
+			m_sql_operator->MySQLInsert(sqlFriendInsertString);
+		}
+
 	}
 
 	return flag;

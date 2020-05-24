@@ -201,8 +201,8 @@ bool MySQLModule::MySQLInsert(const sql::SQLString& sqlString)
 	}
 	catch (sql::SQLException &e)
 	{
-		TRACE(" (MySQL error code : %s \n", e.getErrorCode());
-		TRACE(" SQLState : %s \n", e.getSQLState());
+		//TRACE(" (MySQL error code : %s \n", e.getErrorCode());
+		//TRACE(" SQLState : %s \n", e.getSQLState());
 	}
 }
 

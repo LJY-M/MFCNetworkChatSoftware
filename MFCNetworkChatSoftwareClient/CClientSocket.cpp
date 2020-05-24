@@ -167,7 +167,6 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag)
 		}
 		break;
 	}
-
 	case 9:
 	{
 
@@ -184,6 +183,16 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag)
 
 		Send(m_sendBuf, strlen(m_sendBuf));
 
+		break;
+	}
+	case 10:
+	{
+		AfxMessageBox(_T(resultVector[0].c_str()));
+		break;
+	}
+	case 11:
+	{
+		AfxMessageBox(_T(resultVector[0].c_str()));
 		break;
 	}
 	default:
