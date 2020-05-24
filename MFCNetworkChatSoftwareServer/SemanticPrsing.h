@@ -22,5 +22,9 @@ public:
 	int* clientId;
 
 	char FNameList[1024];
+
+	char FListRequest[1024];
+	// 获取好友申请列表
+	int GetFriendListRequest(MySQLModule* m_sql_operator, string userName);
 };
 

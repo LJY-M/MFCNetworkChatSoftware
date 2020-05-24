@@ -6,7 +6,8 @@ int SemanticPrsing::receivingOrder(MySQLModule* m_sql_operator, vector<string> r
 {
 	// TODO: 在此处添加实现代码.
 
-	int flag = 0;//0:失败；1：登录成功；2:密码错误；3：多地登录；4：退出成功；5：发送好友列表；6：发送信息
+	int flag = 0;//0:失败；1：登录成功；2:密码错误；3：多地登录；
+	//4：退出成功；5：发送好友列表；6：发送信息返回；7：发送信息；8：发送好友申请列表
 
 	for (size_t i = 0; i < receivingOrderVector.size(); i++)
 	{
@@ -144,10 +145,10 @@ int SemanticPrsing::receivingOrder(MySQLModule* m_sql_operator, vector<string> r
 			string friend_b = resB->getString("friend_b").c_str();
 			string friend_relationship = resB->getString("friend_relationship").c_str();
 			TRACE("\n");
-			TRACE(" SQLState : %d \n", id);
-			TRACE(" SQLState : %s \n", friend_a.c_str());
-			TRACE(" SQLState : %s \n", friend_b.c_str());
-			TRACE(" SQLState : %s \n", friend_relationship.c_str());
+			TRACE(" SQInittate : %d \n", id);
+			TRACE(" SQInittate : %s \n", friend_a.c_str());
+			TRACE(" SQInittate : %s \n", friend_b.c_str());
+			TRACE(" SQInittate : %s \n", friend_relationship.c_str());
 			TRACE("\n");
 
 			if (userName.compare(friend_a) == 0)
@@ -160,6 +161,7 @@ int SemanticPrsing::receivingOrder(MySQLModule* m_sql_operator, vector<string> r
 			}
 		}
 
+		memset(FNameList, 0, sizeof(FNameList));
 		strcpy_s(FNameList, "");
 		
 		POSITION pos = frinedNameList.GetHeadPosition();
@@ -173,6 +175,8 @@ int SemanticPrsing::receivingOrder(MySQLModule* m_sql_operator, vector<string> r
 		TRACE(" Friend Test : %s \n", FNameList);
 
 		flag = 5;
+
+		GetFriendListRequest(m_sql_operator, userName);
 
 	}
 	else if (receivingOrderVector[1].compare(orderString[4]) == 0)
@@ -192,4 +196,80 @@ int SemanticPrsing::receivingOrder(MySQLModule* m_sql_operator, vector<string> r
 		flag = 6;
 	}
 	return flag;
+}
+
+
+// 获取好友申请列表
+int SemanticPrsing::GetFriendListRequest(MySQLModule* m_sql_operator, string userName)
+{
+	// TODO: 在此处添加实现代码.
+	string sqlSelectFriendListTitle = "SELECT * FROM friend_list ";
+	string sqlWhereFriendA = " WHERE friend_a = '";
+	string sqlWhereFriendB = " WHERE friend_b = '";
+	string sqlWhereFriendRelationshipA = " AND friend_relationship = 'a' ";
+	string sqlWhereFriendRelationshipB = " AND friend_relationship = 'b' ";
+	string sqlEnd = "'";
+
+	string sqlQueryAExecute = sqlSelectFriendListTitle + sqlWhereFriendA + userName + sqlEnd + sqlWhereFriendRelationshipB;
+	string sqlQueryBExecute = sqlSelectFriendListTitle + sqlWhereFriendB + userName + sqlEnd + sqlWhereFriendRelationshipA;
+
+	CList<string> frinedRequestList;
+
+	const sql::SQLString sqlAString(sqlQueryAExecute.c_str());
+	sql::ResultSet *resA;
+	resA = m_sql_operator->MySQLQuery(sqlAString);
+	while (resA->next())
+	{
+
+		int id = resA->getInt("id");
+		string friend_a = resA->getString("friend_a").c_str();
+		string friend_b = resA->getString("friend_b").c_str();
+		string friend_relationship = resA->getString("friend_relationship").c_str();
+		TRACE("\n");
+		TRACE(" SQLAFState : %d \n", id);
+		TRACE(" SQLAFState : %s \n", friend_a.c_str());
+		TRACE(" SQLAFState : %s \n", friend_b.c_str());
+		TRACE(" SQLAFState : %s \n", friend_relationship.c_str());
+		TRACE("\n");
+
+
+		frinedRequestList.AddTail(friend_b);
+	}
+
+	const sql::SQLString sqlBString(sqlQueryBExecute.c_str());
+	sql::ResultSet *resB;
+	resB = m_sql_operator->MySQLQuery(sqlBString);
+	while (resB->next())
+	{
+
+		int id = resB->getInt("id");
+		string friend_a = resB->getString("friend_a").c_str();
+		string friend_b = resB->getString("friend_b").c_str();
+		string friend_relationship = resB->getString("friend_relationship").c_str();
+		TRACE("\n");
+		TRACE(" SQAFtate : %d \n", id);
+		TRACE(" SQAFtate : %s \n", friend_a.c_str());
+		TRACE(" SQAFtate : %s \n", friend_b.c_str());
+		TRACE(" SQAFtate : %s \n", friend_relationship.c_str());
+		TRACE("\n");
+
+
+		frinedRequestList.AddTail(friend_a);
+	}
+	
+	//memset(FListRequest, 0, sizeof(FListRequest) / sizeof(char));
+	memset(FListRequest, 0, sizeof(FListRequest));
+	strcpy_s(FListRequest, "");
+
+	POSITION pos = frinedRequestList.GetHeadPosition();
+	while (pos != NULL) {
+		string name = frinedRequestList.GetNext(pos);
+		TRACE(" Friend Test : %s \n", name.c_str());
+		strcat_s(FListRequest, name.c_str());
+		strcat_s(FListRequest, "-");
+	}
+
+	TRACE(" Friend Test : %s \n", FListRequest);
+
+	return 8;
 }

@@ -36,7 +36,7 @@ public:
 	// 好友申请列表
 	CListBox m_list_new_friend;
 	// 查询用户下拉框
-	CComboBox m_combobox_query_friend;
+	//CComboBox m_combobox_query_friend;
 
 	string clientName;
 
@@ -46,4 +46,7 @@ public:
 	afx_msg void OnClickedButtonSendMsg();
 	// 信息发送栏
 	CString m_edit_send_msg;
+	// 添加好友姓名编辑框
+	CString m_edit_friend_name;
+	afx_msg void OnClickedButtonSendApp();
 };

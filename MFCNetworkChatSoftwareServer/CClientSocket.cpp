@@ -185,6 +185,17 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag,
 		m_ListBox->AddString(addLogin5String);
 
 		Send(addLogin5String, strlen(addLogin5String));
+
+		Sleep(1000);
+
+		char addLogin8String[1024] = "User ";
+		strcat_s(addLogin8String, resultVector[2].c_str());
+		strcat_s(addLogin8String, " Get Friend Request List !/8/");
+		strcat_s(addLogin8String, m_semantic_prising->FListRequest);
+
+		m_ListBox->AddString(addLogin8String);
+
+		Send(addLogin8String, strlen(addLogin8String));
 		break;
 	}
 	case 6:

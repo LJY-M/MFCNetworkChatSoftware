@@ -90,7 +90,7 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag)
 		m_list_friends = &(chatConsole->m_list_friends);
 		m_list_dialog = &(chatConsole->m_list_dialog);
 		m_list_new_friend = &(chatConsole->m_list_new_friend);
-		m_combobox_query_friend = &(chatConsole->m_combobox_query_friend);
+		//m_combobox_query_friend = &(chatConsole->m_combobox_query_friend);
 
 		chatConsole->clientName = *clientName;
 		chatConsole->clientSocket = this;
@@ -146,6 +146,17 @@ void CClientSocket::resultReduction(vector<string> resultVector, int resultFlag)
 		m_list_dialog->AddString(MSG.c_str());
 		m_list_dialog->AddString(sysTime.c_str());
 		m_list_dialog->AddString("");
+		break;
+	}
+	case 8:
+	{
+		string friendRequestListString = resultVector[2];
+		vector<string> friendRequestVec = split(friendRequestListString, "-");
+		for (size_t i = 0; i < friendRequestVec.size(); i++)
+		{
+			TRACE("friend split : %s \n", friendRequestVec[i].c_str());
+			m_list_new_friend->AddString(friendRequestVec[i].c_str());
+		}
 		break;
 	}
 	default:

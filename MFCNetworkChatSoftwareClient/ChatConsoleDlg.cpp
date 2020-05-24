@@ -16,6 +16,7 @@ IMPLEMENT_DYNAMIC(ChatConsoleDlg, CDialogEx)
 ChatConsoleDlg::ChatConsoleDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_CHAT_CONSOLE, pParent)
 	, m_edit_send_msg(_T(""))
+	, m_edit_friend_name(_T(""))
 {
 
 }
@@ -30,13 +31,14 @@ void ChatConsoleDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LIST_FRIENDS, m_list_friends);
 	DDX_Control(pDX, IDC_LIST_DIALOG, m_list_dialog);
 	DDX_Control(pDX, IDC_LIST_NEW_FRIEND, m_list_new_friend);
-	DDX_Control(pDX, IDC_ADD_FRIEND, m_combobox_query_friend);
 	DDX_Text(pDX, IDC_EDIT_SEND_MESSAGE, m_edit_send_msg);
+	DDX_Text(pDX, IDC_EDIT_FRIEND_NAME, m_edit_friend_name);
 }
 
 
 BEGIN_MESSAGE_MAP(ChatConsoleDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_SEND_MSG, &ChatConsoleDlg::OnClickedButtonSendMsg)
+	ON_BN_CLICKED(IDC_BUTTON_SEND_APP, &ChatConsoleDlg::OnClickedButtonSendApp)
 END_MESSAGE_MAP()
 
 
@@ -71,11 +73,37 @@ void ChatConsoleDlg::OnClickedButtonSendMsg()
 	strcat_s(m_sendBuf, m_edit_send_msg);
 	strcat_s(m_sendBuf, "/");
 	strcat_s(m_sendBuf, systemTime);
+
 	clientSocket->Send(m_sendBuf, strlen(m_sendBuf));
 
 	m_list_dialog.AddString("\n");
-	m_list_dialog.AddString(clientName.c_str());
+	char m_addString[32] = "";
+	strcat_s(m_addString, clientName.c_str());
+	strcat_s(m_addString, " to ");
+	strcat_s(m_addString, targetUser);
+	strcat_s(m_addString, " : ");
+	m_list_dialog.AddString(m_addString);
 	m_list_dialog.AddString(m_edit_send_msg);
 	m_list_dialog.AddString(systemTime);
 	m_list_dialog.AddString("\n");
+}
+
+void ChatConsoleDlg::OnClickedButtonSendApp()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(true);
+
+	char m_name[32];
+	strcpy_s(m_name, "");
+	strcat_s(m_name, m_edit_friend_name);
+
+	char m_sendBuf[2048];   //初始化新对话框列表
+	strcpy_s(m_sendBuf, "Client send/");
+	CString editMSG = _T("AddNewFriendSend/");
+	strcat_s(m_sendBuf, editMSG);
+	strcat_s(m_sendBuf, clientName.c_str());
+	strcat_s(m_sendBuf, "/");
+	strcat_s(m_sendBuf, m_name);
+
+	//clientSocket->Send(m_sendBuf, strlen(m_sendBuf));
 }
