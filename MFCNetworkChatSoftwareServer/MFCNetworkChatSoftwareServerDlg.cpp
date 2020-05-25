@@ -198,8 +198,8 @@ void CMFCNetworkChatSoftwareServerDlg::OnClickedButtonStart()
 
 	m_ListenSocket->SetListBoxMsg(&m_list_message_logging);    //服务器消息记录
 
-	mysqlTest = new MySQLModule();
-	m_ListenSocket->m_sql_operator = mysqlTest;
+	m_sql_operator = new MySQLModule();
+	m_ListenSocket->m_sql_operator = m_sql_operator;
 
 	//this->EnableWindow(FALSE);
 

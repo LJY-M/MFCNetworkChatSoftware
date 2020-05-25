@@ -40,5 +40,5 @@ public:
 	CListBox m_list_message_logging;
 	afx_msg void OnClickedButtonStart();
 
-	MySQLModule* mysqlTest;
+	MySQLModule* m_sql_operator;
 };

@@ -41,7 +41,5 @@ public:
 	CListBox* m_list_dialog;
 	// 好友申请列表
 	CListBox* m_list_new_friend;
-	// 查询用户下拉框
-	CComboBox* m_combobox_query_friend;
 };
 
